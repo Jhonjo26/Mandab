@@ -97,7 +97,7 @@ def hero() -> rx.Component:
         rx.heading(
             "MANDABIKE",
             size="9",
-            color="orange",
+            color="green",
             font_weight="900",
             letter_spacing="2px",
         ),

@@ -3,6 +3,7 @@
 # Interfaz principal Reflex. Mobile-First.
 
 import reflex as rx
+import urllib.parse
 from config_tarifas import (
     calcular_tarifa_servicio,
     TipoMandado,
@@ -71,7 +72,7 @@ class MandabikeState(rx.State):
         )
         self.whatsapp_link = (
             f"https://wa.me/{WHATSAPP_NUMERO}"
-            f"?text={rx.utils.format.encode_query_params({'': texto_wa})[1:]}"
+            f"?text={urllib.parse.quote(texto_wa)}"
         )
 
     def set_tipo_mandado(self, valor: str):

@@ -66,25 +66,24 @@ class MandabikeState(rx.State):
     def set_tipo_mandado(self, valor: str):
         self.tipo_mandado = valor
         self.actualizar_calculo()
+        def set_zona(self, valor: str):
+            self.zona = valor
+            self.actualizar_calculo()
 
-    def set_zona(self, valor: str):
-        self.zona = valor
-        self.actualizar_calculo()
-
-    def set_monto(self, valor: str):
-        self.monto_efectivo = valor
-        self.actualizar_calculo()
-       @rx.var
-def whatsapp_link(self) -> str:
-    texto = (
-        f"Hola Mandabike, necesito un servicio de "
-        f"{self.tipo_mandado} en la zona {self.zona} "
-        f"por un valor de tarifa de {self.tarifa_display}"
-    )
-    return (
-        f"https://wa.me/542302567402"
-        f"?text={urllib.parse.quote(texto)}"
-    ) 
+        def set_monto(self, valor: str):
+            self.monto_efectivo = valor
+            self.actualizar_calculo()
+        @rx.var
+        def whatsapp_link(self) -> str:
+            texto = (
+                f"Hola Mandabike, necesito un servicio de "
+                f"{self.tipo_mandado} en la zona {self.zona} "
+                f"por un valor de tarifa de {self.tarifa_display}"
+            )
+            return (
+                f"https://wa.me/542302567402"
+                f"?text={urllib.parse.quote(texto)}"
+            ) 
         
 
 

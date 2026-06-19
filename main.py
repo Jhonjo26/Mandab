@@ -227,24 +227,20 @@ def resultado_tarifa() -> rx.Component:
 
 
 def cta_whatsapp() -> rx.Component:
-    """Botón principal — abre WhatsApp con mensaje pre-cargado (skill 3)."""
-    return rx.link(
-        rx.button(
+        """Botón principal — abre WhatsApp con mensaje pre-cargado (skill 3)."""
+        return rx.button(
             rx.hstack(
-                rx.text("📲", size="4"),
+                rx.text("📱", size="4"),
                 rx.text("Solicitar Cadete", size="4", font_weight="700"),
                 spacing="2",
                 align="center",
             ),
+            on_click=rx.redirect(MandabikeState.whatsapp_link, is_external=True),
             width="100%",
             size="4",
             color_scheme="green",
             cursor="pointer",
-        ),
-        href=MandabikeState.whatsapp_link,
-        is_external=True,
-        width="100%",
-    )
+        )
 
 
 def footer() -> rx.Component:

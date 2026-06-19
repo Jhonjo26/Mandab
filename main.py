@@ -33,7 +33,6 @@ class MandabikeState(rx.State):
     zona: str         = Zona.CENTRO.value
     monto_efectivo: str = ""
     tarifa_display: str = "$5.000"
-    regla_display: str  = "Tarifa plana zona Centro"
     whatsapp_link: str  = ""
 
     def actualizar_calculo(self):
@@ -64,17 +63,6 @@ class MandabikeState(rx.State):
         self.tarifa_display = resultado.formatear_tarifa()
         self.regla_display  = resultado.regla_aplicada
 
-        # Construir enlace WhatsApp (skill 3)
-        texto_wa = (
-            f"Hola Mandabike, necesito un servicio de "
-            f"{self.tipo_mandado} en la zona {self.zona} "
-            f"por un valor de tarifa de {self.tarifa_display}"
-        )
-        self.whatsapp_link = (
-            f"https://wa.me/{WHATSAPP_NUMERO}"
-            f"?text={urllib.parse.quote(texto_wa)}"
-        )
-
     def set_tipo_mandado(self, valor: str):
         self.tipo_mandado = valor
         self.actualizar_calculo()
@@ -86,6 +74,18 @@ class MandabikeState(rx.State):
     def set_monto(self, valor: str):
         self.monto_efectivo = valor
         self.actualizar_calculo()
+       @rx.var
+def whatsapp_link(self) -> str:
+    texto = (
+        f"Hola Mandabike, necesito un servicio de "
+        f"{self.tipo_mandado} en la zona {self.zona} "
+        f"por un valor de tarifa de {self.tarifa_display}"
+    )
+    return (
+        f"https://wa.me/542302567402"
+        f"?text={urllib.parse.quote(texto)}"
+    ) 
+        
 
 
 # ──────────────────────────────────────────────

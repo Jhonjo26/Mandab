@@ -66,6 +66,7 @@ class MandabikeState(rx.State):
     def set_tipo_mandado(self, valor: str):
         self.tipo_mandado = valor
         self.actualizar_calculo()
+        
         def set_zona(self, valor: str):
             self.zona = valor
             self.actualizar_calculo()

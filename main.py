@@ -33,7 +33,9 @@ class MandabikeState(rx.State):
     zona: str         = Zona.CENTRO.value
     monto_efectivo: str = ""
     tarifa_display: str = "$5.000"
-    whatsapp_link: str  = ""
+    regla_display: str = "Tarifa plana zona Centro"
+
+    def actualizar_calculo(self):
 
     def actualizar_calculo(self):
         """
@@ -67,15 +69,15 @@ class MandabikeState(rx.State):
         self.tipo_mandado = valor
         self.actualizar_calculo()
         
-        def set_zona(self, valor: str):
-            self.zona = valor
-            self.actualizar_calculo()
+    def set_zona(self, valor: str):
+        self.zona = valor
+        self.actualizar_calculo()
 
-        def set_monto(self, valor: str):
-            self.monto_efectivo = valor
-            self.actualizar_calculo()
-        @rx.var
-        def whatsapp_link(self) -> str:
+    def set_monto(self, valor: str):
+        self.monto_efectivo = valor
+        self.actualizar_calculo()
+    @rx.var
+    def whatsapp_link(self) -> str:
             texto = (
                 f"Hola Mandabike, necesito un servicio de "
                 f"{self.tipo_mandado} en la zona {self.zona} "

@@ -36,8 +36,6 @@ class MandabikeState(rx.State):
     regla_display: str = "Tarifa plana zona Centro"
 
     def actualizar_calculo(self):
-
-    def actualizar_calculo(self):
         """
         Handler único: convierte strings → Enums,
         llama al motor de negocio y actualiza la UI.

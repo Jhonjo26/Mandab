@@ -18,6 +18,15 @@ WHATSAPP_NUMERO = "542302567402"  # Formato internacional sin + ni guiones
 INSTAGRAM_USER  = "manda1bike"
 EMAIL_CONTACTO  = "carlosfabianpardo9@gmail.com"
 
+# Foto de stock libre (Unsplash License) — calle urbana con ciclista.
+# Fuente: Max Bender, unsplash.com/photos/1zFK0pkHo9w
+BACKGROUND_IMAGE_URL = (
+    "https://images.unsplash.com/photo-1712249764665-15da106b4be8"
+    "?fm=jpg&q=70&w=1200&auto=format&fit=crop"
+)
+
+ACCENT = "#06b6d4"  # cian — bordes y detalles de tarjetas
+
 
 # ──────────────────────────────────────────────
 # ESTADO REACTIVO
@@ -40,19 +49,17 @@ class MandabikeState(rx.State):
         Handler único: convierte strings → Enums,
         llama al motor de negocio y actualiza la UI.
         """
-        # Conversión segura de monto
         try:
             monto = float(self.monto_efectivo.replace(".", "").replace(",", ".")) \
                     if self.monto_efectivo else 0.0
         except ValueError:
             monto = 0.0
 
-        # Conversión str → Enum (compatibilidad con config_tarifas.py)
         try:
             tipo_enum = TipoMandado(self.tipo_mandado)
             zona_enum = Zona(self.zona)
         except ValueError:
-            return  # Valor inválido: no actualizar
+            return
 
         resultado = calcular_tarifa_servicio(
             tipo_mandado=tipo_enum,
@@ -66,7 +73,7 @@ class MandabikeState(rx.State):
     def set_tipo_mandado(self, valor: str):
         self.tipo_mandado = valor
         self.actualizar_calculo()
-        
+
     def set_zona(self, valor: str):
         self.zona = valor
         self.actualizar_calculo()
@@ -74,18 +81,18 @@ class MandabikeState(rx.State):
     def set_monto(self, valor: str):
         self.monto_efectivo = valor
         self.actualizar_calculo()
+
     @rx.var
     def whatsapp_link(self) -> str:
-            texto = (
-                f"Hola Mandabike, necesito un servicio de "
-                f"{self.tipo_mandado} en la zona {self.zona} "
-                f"por un valor de tarifa de {self.tarifa_display}"
-            )
-            return (
-                f"https://wa.me/542302567402"
-                f"?text={urllib.parse.quote(texto)}"
-            ) 
-        
+        texto = (
+            f"Hola Manda Bike, necesito un servicio de "
+            f"{self.tipo_mandado} en la zona {self.zona} "
+            f"por un valor de tarifa de {self.tarifa_display}"
+        )
+        return (
+            f"https://wa.me/542302567402"
+            f"?text={urllib.parse.quote(texto)}"
+        )
 
 
 # ──────────────────────────────────────────────
@@ -93,14 +100,27 @@ class MandabikeState(rx.State):
 # ──────────────────────────────────────────────
 
 def hero() -> rx.Component:
-    """Identidad de marca + métricas de confianza."""
+    """Identidad de marca + métricas de confianza. Logo en 2 líneas, estilo urbano."""
     return rx.vstack(
-        rx.heading(
-            "MANDABIKE",
-            size="9",
-            color="green",
-            font_weight="900",
-            letter_spacing="2px",
+        rx.vstack(
+            rx.heading(
+                "MANDA",
+                size="8",
+                color="green",
+                font_weight="900",
+                letter_spacing="2px",
+                line_height="1",
+            ),
+            rx.heading(
+                "BIKE",
+                size="8",
+                color=ACCENT,
+                font_weight="900",
+                letter_spacing="2px",
+                line_height="1",
+            ),
+            spacing="0",
+            align="center",
         ),
         rx.text(
             "Más de 15 años de confianza y seguridad recorriendo las calles de General Pico.",
@@ -109,20 +129,34 @@ def hero() -> rx.Component:
             font_style="italic",
             text_align="center",
         ),
-        # Métricas
         rx.hstack(
-            rx.vstack(
-                rx.heading("15+", size="7", color="orange"),
-                rx.text("años", size="2", color="gray"),
-                align="center",
+            rx.box(
+                rx.vstack(
+                    rx.heading("15+", size="7", color="green", font_weight="900"),
+                    rx.text("años", size="2", color="gray"),
+                    align="center",
+                    spacing="1",
+                ),
+                border=f"2px solid {ACCENT}",
+                border_radius="12px",
+                padding="14px 22px",
+                background="rgba(255,255,255,0.88)",
+                box_shadow=f"0 0 10px {ACCENT}55",
             ),
-            rx.divider(orientation="vertical", height="50px"),
-            rx.vstack(
-                rx.heading("100k+", size="7", color="orange"),
-                rx.text("mandados", size="2", color="gray"),
-                align="center",
+            rx.box(
+                rx.vstack(
+                    rx.heading("100k+", size="7", color="green", font_weight="900"),
+                    rx.text("mandados", size="2", color="gray"),
+                    align="center",
+                    spacing="1",
+                ),
+                border=f"2px solid {ACCENT}",
+                border_radius="12px",
+                padding="14px 22px",
+                background="rgba(255,255,255,0.88)",
+                box_shadow=f"0 0 10px {ACCENT}55",
             ),
-            spacing="6",
+            spacing="4",
             justify="center",
             width="100%",
             padding_y="12px",
@@ -139,8 +173,8 @@ def selector_servicio() -> rx.Component:
         rx.text("Tipo de servicio", size="2", color="gray", font_weight="600"),
         rx.select(
             [TipoMandado.MANDADO_COMUN.value, TipoMandado.DEPOSITO_BANCARIO.value],
-            value=MandabikeState.tipo_mandado,
-            on_change=MandabikeState.set_tipo_mandado,
+            value=MandaBikeState.tipo_mandado,
+            on_change=MandaBikeState.set_tipo_mandado,
             width="100%",
         ),
         rx.text("Zona de entrega", size="2", color="gray", font_weight="600"),
@@ -195,7 +229,7 @@ def calculador_monto() -> rx.Component:
             width="100%",
             spacing="2",
         ),
-        rx.fragment(),  # Nada si es mandado común
+        rx.fragment(),
     )
 
 
@@ -215,7 +249,7 @@ def resultado_tarifa() -> rx.Component:
             width="100%",
         ),
         rx.text(
-            MandabikeState.regla_display,
+            MandaBikeState.regla_display,
             size="1",
             color="gray",
             font_style="italic",
@@ -226,49 +260,81 @@ def resultado_tarifa() -> rx.Component:
     )
 
 
-def cta_whatsapp() -> rx.Component:
-        """Botón principal — abre WhatsApp con mensaje pre-cargado (skill 3)."""
-        return rx.button(
-            rx.hstack(
-                rx.text("📱", size="4"),
-                rx.text("Solicitar Cadete", size="4", font_weight="700"),
-                spacing="2",
-                align="center",
-            ),
-            on_click=rx.redirect(MandabikeState.whatsapp_link, is_external=True),
+def tarjeta_calculadora() -> rx.Component:
+    """Tarjeta contenedora: selector + zona + tarifa, estilo urbano con borde cian."""
+    return rx.box(
+        rx.vstack(
+            selector_servicio(),
+            calculador_monto(),
+            resultado_tarifa(),
+            spacing="3",
             width="100%",
-            size="4",
-            color_scheme="green",
-            cursor="pointer",
-        )
+        ),
+        border=f"2px solid {ACCENT}",
+        border_radius="16px",
+        background="rgba(255,255,255,0.92)",
+        box_shadow=f"0 0 16px {ACCENT}55",
+        padding="20px",
+        width="100%",
+    )
+
+
+def cta_whatsapp() -> rx.Component:
+    """Botón principal — abre WhatsApp con mensaje pre-cargado (skill 3)."""
+    return rx.button(
+        rx.hstack(
+            rx.text("📱", size="4"),
+            rx.text("Solicitar Cadete", size="4", font_weight="700"),
+            spacing="2",
+            align="center",
+        ),
+        on_click=rx.redirect(MandabikeState.whatsapp_link, is_external=True),
+        width="100%",
+        size="4",
+        color_scheme="green",
+        cursor="pointer",
+    )
 
 
 def footer() -> rx.Component:
-    """Contacto y redes."""
-    return rx.vstack(
-        rx.divider(),
-        rx.hstack(
-            rx.link(
-                rx.text("📸 @manda1bike", size="2", color="gray"),
-                href=f"https://instagram.com/{INSTAGRAM_USER}",
-                is_external=True,
+    """Contacto y redes — tarjeta estilo urbano con borde cian."""
+    return rx.box(
+        rx.vstack(
+            rx.hstack(
+                rx.text("📸", size="3"),
+                rx.link(
+                    rx.text("@manda1bike", size="2", color="gray"),
+                    href=f"https://instagram.com/{INSTAGRAM_USER}",
+                    is_external=True,
+                ),
+                spacing="2",
+                align="center",
             ),
-            rx.link(
-                rx.text("✉ Email", size="2", color="gray"),
-                href=f"mailto:{EMAIL_CONTACTO}",
+            rx.hstack(
+                rx.text("✉", size="3"),
+                rx.link(
+                    rx.text("Email", size="2", color="gray"),
+                    href=f"mailto:{EMAIL_CONTACTO}",
+                ),
+                spacing="2",
+                align="center",
             ),
-            justify="center",
-            spacing="6",
+            rx.hstack(
+                rx.text("📍", size="3"),
+                rx.text("General Pico · La Pampa", size="2", color="gray"),
+                spacing="2",
+                align="center",
+            ),
+            spacing="3",
+            align="start",
             width="100%",
         ),
-        rx.text(
-            "General Pico · La Pampa",
-            size="1",
-            color="gray",
-            text_align="center",
-        ),
+        border=f"2px solid {ACCENT}",
+        border_radius="16px",
+        background="rgba(255,255,255,0.92)",
+        box_shadow=f"0 0 14px {ACCENT}55",
+        padding="20px",
         width="100%",
-        padding_y="16px",
     )
 
 
@@ -277,21 +343,29 @@ def footer() -> rx.Component:
 # ──────────────────────────────────────────────
 
 def index() -> rx.Component:
-    return rx.center(
-        rx.vstack(
-            hero(),
-            selector_servicio(),
-            calculador_monto(),
-            resultado_tarifa(),
-            cta_whatsapp(),
-            footer(),
-            spacing="4",
-            padding="24px",
-            max_width="480px",  # Mobile-First: ancho máximo celular
+    return rx.box(
+        rx.center(
+            rx.vstack(
+                hero(),
+                tarjeta_calculadora(),
+                cta_whatsapp(),
+                footer(),
+                spacing="5",
+                padding="24px",
+                max_width="480px",
+                width="100%",
+            ),
             width="100%",
         ),
+        background_image=(
+            f"linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.85)), "
+            f"url('{BACKGROUND_IMAGE_URL}')"
+        ),
+        background_size="cover",
+        background_position="center",
+        background_attachment="fixed",
         min_height="100vh",
-        background="black",
+        width="100%",
     )
 
 
@@ -300,10 +374,9 @@ def index() -> rx.Component:
 # ──────────────────────────────────────────────
 
 app = rx.App(
-    theme=rx.theme(
-        appearance="dark",
-        accent_color="orange",
+    theme=rx.theme(2 
+        appearance="light",
+        accent_color="cyan",
     )
 )
-app.add_page(index, route="/", title="Mandabike — General Pico")
-      
+app.add_page(index, route="/", title="Manda Bike — General Pico")

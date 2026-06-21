@@ -277,8 +277,26 @@ def tarjeta_calculadora() -> rx.Component:
         padding="20px",
         width="100%",
     )
-
-
+def mapa() -> rx.Component:
+    """Mapa de cobertura — General Pico (OpenStreetMap, sin costo)."""
+    return rx.box(
+        rx.vstack(
+            rx.text("Zona de cobertura", size="2", color="gray", font_weight="600"),
+            rx.html.iframe(
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-63.80,-35.69,-63.71,-35.62&layer=mapnik",
+                width="100%",
+                height="300px",
+            ),
+            spacing="2",
+            width="100%",
+        ),
+        border=f"2px solid {ACCENT}",
+        border_radius="16px",
+        background="rgba(255,255,255,0.95)",
+        box_shadow=f"0 0 16px {ACCENT}55",
+        padding="20px",
+        width="100%",
+    )
 def cta_whatsapp() -> rx.Component:
     """Botón principal — abre WhatsApp con mensaje pre-cargado (skill 3)."""
     return rx.button(
@@ -347,7 +365,7 @@ def index() -> rx.Component:
         rx.center(
             rx.vstack(
                 hero(),
-                tarjeta_calculadora(),
+                tarjeta_calculadora(),mapa(),
                 cta_whatsapp(),
                 footer(),
                 spacing="5",

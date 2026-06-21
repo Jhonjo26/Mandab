@@ -25,7 +25,7 @@ BACKGROUND_IMAGE_URL = (
     "?fm=jpg&q=70&w=1200&auto=format&fit=crop"
 )
 
-ACCENT = "#06b6d4"  # cian — bordes y detalles de tarjetas
+ACCENT = "#0891b2"  # cian oscuro — bordes y detalles de tarjetas
 
 
 # ──────────────────────────────────────────────
@@ -140,7 +140,7 @@ def hero() -> rx.Component:
                 border=f"2px solid {ACCENT}",
                 border_radius="12px",
                 padding="14px 22px",
-                background="rgba(255,255,255,0.88)",
+                background="rgba(255,255,255,0.95)", 
                 box_shadow=f"0 0 10px {ACCENT}55",
             ),
             rx.box(
@@ -153,7 +153,7 @@ def hero() -> rx.Component:
                 border=f"2px solid {ACCENT}",
                 border_radius="12px",
                 padding="14px 22px",
-                background="rgba(255,255,255,0.88)",
+                background="rgba(255,255,255,0.95)",
                 box_shadow=f"0 0 10px {ACCENT}55",
             ),
             spacing="4",
@@ -272,7 +272,7 @@ def tarjeta_calculadora() -> rx.Component:
         ),
         border=f"2px solid {ACCENT}",
         border_radius="16px",
-        background="rgba(255,255,255,0.92)",
+        background="rgba(255,255,255,0.95)", 
         box_shadow=f"0 0 16px {ACCENT}55",
         padding="20px",
         width="100%",
@@ -331,7 +331,7 @@ def footer() -> rx.Component:
         ),
         border=f"2px solid {ACCENT}",
         border_radius="16px",
-        background="rgba(255,255,255,0.92)",
+        background="rgba(255,255,255,0.95)", 
         box_shadow=f"0 0 14px {ACCENT}55",
         padding="20px",
         width="100%",

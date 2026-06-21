@@ -282,7 +282,7 @@ def mapa() -> rx.Component:
     return rx.box(
         rx.vstack(
             rx.text("Zona de cobertura", size="2", color="gray", font_weight="600"),
-            rx.html.iframe(
+            rx.el.iframe(  
                 src="https://www.openstreetmap.org/export/embed.html?bbox=-63.80,-35.69,-63.71,-35.62&layer=mapnik",
                 width="100%",
                 height="300px",

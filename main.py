@@ -173,8 +173,8 @@ def selector_servicio() -> rx.Component:
         rx.text("Tipo de servicio", size="2", color="gray", font_weight="600"),
         rx.select(
             [TipoMandado.MANDADO_COMUN.value, TipoMandado.DEPOSITO_BANCARIO.value],
-            value=MandaBikeState.tipo_mandado,
-            on_change=MandaBikeState.set_tipo_mandado,
+            value=MandabikeState.tipo_mandado,
+            on_change=MandabikeState.set_tipo_mandado,
             width="100%",
         ),
         rx.text("Zona de entrega", size="2", color="gray", font_weight="600"),
@@ -249,7 +249,7 @@ def resultado_tarifa() -> rx.Component:
             width="100%",
         ),
         rx.text(
-            MandaBikeState.regla_display,
+            MandabikeState.regla_display,
             size="1",
             color="gray",
             font_style="italic",
@@ -374,7 +374,7 @@ def index() -> rx.Component:
 # ──────────────────────────────────────────────
 
 app = rx.App(
-    theme=rx.theme(2 
+    theme=rx.theme(
         appearance="light",
         accent_color="cyan",
     )

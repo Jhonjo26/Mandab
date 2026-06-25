@@ -312,7 +312,92 @@ def cta_whatsapp() -> rx.Component:
         color_scheme="green",
         cursor="pointer",
     )
+def plan_empresas() -> rx.Component:
+    """Sección Plan para Empresas — propuesta de valor B2B."""
+    texto_wa = urllib.parse.quote(
+        "Hola Manda Bike, quiero información sobre el Plan para Empresas"
+    )
+    whatsapp_empresas = f"https://wa.me/{WHATSAPP_NUMERO}?text={texto_wa}"
 
+    return rx.box(
+        rx.vstack(
+            rx.heading(
+                "Plan para Empresas",
+                size="7",
+                color="#f97316",
+                font_weight="900",
+                letter_spacing="1px",
+            ),
+            rx.text(
+                "¿Tu negocio necesita mandados frecuentes? Armamos un plan a tu medida. "
+                "Mismo cadete, misma confianza, precio acordado por volumen.",
+                size="3",
+                color="gray",
+                text_align="center",
+            ),
+            rx.vstack(
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Mandados y trámites regulares", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Depósitos bancarios de alta confidencialidad", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Pedidos y entregas a domicilio", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Facturación y cuenta corriente", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Siempre el mismo cadete — confianza garantizada", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                rx.hstack(
+                    rx.text("✓", color="#f97316", font_weight="900", size="3"),
+                    rx.text("Precio negociable por volumen de servicios", size="3", color="gray"),
+                    spacing="2", align="center",
+                ),
+                align="start",
+                width="100%",
+                spacing="2",
+            ),
+            rx.link(
+                rx.button(
+                    rx.hstack(
+                        rx.text("💼", size="4"),
+                        rx.text("Consultar Plan Empresas", size="4", font_weight="700"),
+                        spacing="2",
+                        align="center",
+                    ),
+                    width="100%",
+                    size="4",
+                    color_scheme="orange",
+                    cursor="pointer",
+                ),
+                href=whatsapp_empresas,
+                is_external=True,
+                width="100%",
+            ),
+            spacing="4",
+            width="100%",
+            align="center",
+        ),
+        border="2px solid #f97316",
+        border_radius="16px",
+        background="rgba(255,255,255,0.95)",
+        box_shadow="0 0 20px #f9731655",
+        padding="24px",
+        width="100%",
+    )
 
 def footer() -> rx.Component:
     """Contacto y redes — tarjeta estilo urbano con borde cian."""

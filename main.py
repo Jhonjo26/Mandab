@@ -452,6 +452,7 @@ def index() -> rx.Component:
                 hero(),
                 tarjeta_calculadora(),mapa(),
                 cta_whatsapp(),
+                plan_empresas(),
                 footer(),
                 spacing="5",
                 padding="24px",

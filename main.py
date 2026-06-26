@@ -483,4 +483,4 @@ app = rx.App(
         accent_color="cyan",
     )
 )
-app.add_page(index, route="/", title="Manda Bike — General Pico",favicon="fabicon.svg")
+app.add_page(index, route="/", title="Manda Bike — General Pico")
